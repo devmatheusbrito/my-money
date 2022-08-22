@@ -10,3 +10,5 @@ server.use(bodyParser.json())
 server.listen(port, function () {
   console.log(`AWAKE! is running on ${port}`)
 })
+
+module.exports = server
