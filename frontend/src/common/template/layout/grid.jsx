@@ -19,8 +19,6 @@ export default class Grid extends Component {
       return (
         <div className={gridClasses}> 
           {this.props.children}
-          <h1>as vezes é foda, manter disciplina!</h1>
-          <h1>as vezes é foda, manter disciplina!</h1>
         </div> 
       )
   }
