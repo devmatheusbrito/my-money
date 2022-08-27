@@ -1,10 +1,20 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { getSummary } from './dashboardActions'
 import ContentHeader from '../common/template/contentHeader'
 import Content from '../common/template/content'
 import ValueBox from '../common/widget/valueBox'
 import Row from '../common/template/layout/row'
 class Dashboard extends Component {
+
+  componentWillMount() {
+    this.props.getSummary()
+  }
+
   render() {
+    const { credit, debt } = this.props.summary
+
     return (
       <div>
         <ContentHeader title='Dashboard' small='Versão legacy'/>
@@ -14,19 +24,19 @@ class Dashboard extends Component {
             cols='12 4' 
             color='green' 
             icon='bank' 
-            value='R$ 10'
+            value={`R$ ${credit}`}
             text='Total de Credit'/>
             <ValueBox 
             cols='12 4' 
             color='red' 
             icon='credit-card' 
-            value='R$ 10'
+            value={`R$ ${debt}`}
             text='Total de Debit'/>
             <ValueBox 
             cols='12 4' 
             color='blue' 
             icon='money' 
-            value='R$ 10'
+            value={`R$ ${credit - debt}`}
             text='Valor Consolidado'/>
           </Row>
         </Content>
@@ -35,4 +45,8 @@ class Dashboard extends Component {
   }
 }
 
-export default Dashboard
+const mapStateToProps = state => ({
+  summary: state.dashboard.summary,
+})
+const mapDispatchToProps = dispatch => bindActionCreators({getSummary}, dispatch)
+export default connect(mapStateToProps, mapDispatchToProps)(Dashboard)
